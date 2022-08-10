@@ -71,6 +71,9 @@ if(!oauth) {
     //Don't display options form until after authentication
     let form = document.getElementById("options");
     form.remove();    
+
+    let link = document.getElementById("accesslink");
+    link.href = `https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=sufuzgb8tz2jept2wvpm1qhp94iyxe&redirect_uri=${window.location.href}&scope=chat%3Aread&state=c3ab8aa60vasdf2361f002671`
 }
 else {
     //function to get global or channel emotes
