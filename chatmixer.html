@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+<link rel="stylesheet" href="chatmixer/base.css">
+</head>
+<body id="container">
+
+<h1 id="accesslink"><a href="https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=sufuzgb8tz2jept2wvpm1qhp94iyxe&redirect_uri=http://localhost:5500/chatmixer.html&scope=chat%3Aread&state=c3ab8aa60vasdf2361f002671">Grant Access</a></h1>
+<form id="options">
+    <label for="channels">Channels (comma-seperated)</label>
+    <input type="text" id="channels" name="channels">
+
+    <label for="emote_channels">Emote Channels (comma-seperated)</label>
+    <input type="text" id="emote_channels" name="emote_channels">
+    
+
+    <label for="theme">Theme</label>
+    <input type="radio" id="dark" name="theme" value="Dark" checked="true">
+    <label for="dark">Dark</label>
+    <input type="radio" id="light" name="theme" value="Light">
+    <label for="light">Light</label>
+
+    <input type="checkbox" id="bttv" name="bttv" checked="true">
+    <label for="bttv">Enable BTTV Emotes</label>
+
+    <input type="button" value="Authenticate" onclick="SubmitAuth()">
+
+</form>
+<ol id="chat"></ol>
+
+
+<script src="/chatmixer/tmi.min.js"></script>
+<script src="/chatmixer/chatmixer.js"></script>
+
+</body>
+</html>
+
