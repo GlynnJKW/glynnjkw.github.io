@@ -31,6 +31,7 @@ if(params.get("form_done")) {
     }
 
     let eleven_key = params.get("eleven_key");
+    let default_voice = params.get("default_voice");
 
     let voices = [];
     GetVoices(eleven_key).then(v => voices = v).catch(err => console.error(err));
