@@ -1,6 +1,7 @@
 let eleven_key,minimum_bits,default_voice;
 const cheer_regex = /[cC]heer[0-9]+/g;
 
+let voices = [];
 let voice_queue = [];
 let queue_running = false;
 let audio_player = null;
@@ -177,6 +178,7 @@ window.addEventListener('onWidgetLoad', function (obj) {
     eleven_key=fieldData["eleven_key"];
     minimum_bits=fieldData["minimum_bits"];
     default_voice=fieldData["default_voice"];
+    GetVoices(eleven_key).then(v => voices = v).catch(err => console.error(err));
 });
 
 window.addEventListener('onEventReceived', function (obj) {
