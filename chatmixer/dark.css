@@ -1,5 +1,11 @@
 #container {
-    background-color: #0e0e10;
     overflow:hidden;
     color: white;
+}
+
+li.even {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+li.odd {
+    background-color: rgba(50, 50, 50, 0.7);
 }

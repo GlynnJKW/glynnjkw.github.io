@@ -1,0 +1,8 @@
+
+ol > li.even {
+    background-color: rgba(50, 50, 50, 0.2);
+}
+
+ol > li.odd {
+    background-color: rgba(0, 0, 0, 0.2);
+}

@@ -4,6 +4,9 @@
     height: 100%;
     margin: 1px;
     padding-left: 0px;
+    font-size: 1.2em;
+    font-weight: bold;
+    font-family: Arial;
 }
 
 li.channel0 {
@@ -36,13 +39,6 @@ li.channel6 {
 
 li.channel7 {
     border: 3px solid rgba(50, 50, 50, 1);
-}
-
-li.even {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-li.odd {
-    background-color: rgba(194, 194, 194, 0.1);
 }
 
 li {
