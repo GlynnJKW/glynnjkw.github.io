@@ -15,7 +15,6 @@
 let voice_queue = [];
 let queue_running = false;
 let audio_player = null;
-let params = new URLSearchParams(document.location.href);
 
 async function GetVoices(api_key){
     let voices = []
@@ -98,7 +97,7 @@ async function PlayMessage(api_key, message, voices){
     else {
         default_voice = "Chief";
     }
-    
+
     let message_chunks = [{"name": default_voice, "text": message}];
     for(voice of voices) {
         let next_chunks = [];
