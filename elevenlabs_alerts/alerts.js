@@ -1,4 +1,5 @@
 let params = new URLSearchParams(document.location.href);
+let default_voice = "Chief";
 const cheer_regex = /[cC]heer[0-9]+/g;
 
 function UrlExists(url) {
@@ -31,7 +32,7 @@ if(params.get("form_done")) {
     }
 
     let eleven_key = params.get("eleven_key");
-    let default_voice = params.get("default_voice");
+    default_voice = params.get("default_voice");
 
     let voices = [];
     GetVoices(eleven_key).then(v => voices = v).catch(err => console.error(err));
