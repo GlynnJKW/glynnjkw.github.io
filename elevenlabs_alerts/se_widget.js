@@ -189,4 +189,16 @@ window.addEventListener('onEventReceived', function (obj) {
         console.log(msg);
         QueueMessage(eleven_key, msg, voices);
     }
+    if(obj.detail.listener == 'subscriber-latest') {
+        msg = obj.detail.event.message.replaceAll(cheer_regex, "");
+        msg = RemoveBadWords(msg);
+        console.log(msg);
+        QueueMessage(eleven_key, msg, voices);
+    }
+    if(obj.detail.listener == 'tip-latest') {
+        msg = obj.detail.event.message.replaceAll(cheer_regex, "");
+        msg = RemoveBadWords(msg);
+        console.log(msg);
+        QueueMessage(eleven_key, msg, voices);
+    }
 });
