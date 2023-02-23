@@ -139,8 +139,8 @@ async function DummyMessage(){
 async function IterateQueue(){
     while(voice_queue.length > 0) {
         let q = voice_queue.shift();
-        await PlayMessage(q.key, q.msg, q.voices);
-        //await DummyMessage();
+        //await PlayMessage(q.key, q.msg, q.voices);
+        await DummyMessage();
     }
     queue_running = false;
 }
