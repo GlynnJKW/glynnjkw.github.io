@@ -91,7 +91,7 @@ if(params.get("form_done")) {
         streamelements.on('event', (data) => {
             // Structure as on https://github.com/StreamElements/widgets/blob/master/CustomCode.md#on-event
             //console.log(data);
-            if(data.detail.listener == "cheer-latest" && data["cheer-latest"]["amount"] >= bit_threshold) {
+            if(data.listener == "cheer-latest" && data["cheer-latest"]["amount"] >= bit_threshold) {
                 msg = eventData.message[0].message.replaceAll(cheer_regex, "");
                 msg = RemoveBadWords(msg);
                 console.log(msg);
