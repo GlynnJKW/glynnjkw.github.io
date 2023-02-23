@@ -1,0 +1,38 @@
+{
+  "eleven_key": {
+    "type": "text",
+    "label": "Limit displayed events to:",
+    "value": ""
+  },
+  "minimum_bits": {
+    "type": "number",
+    "label": "Minimum bits to play tts",
+    "value": 25
+  },
+  "default_voice": {
+    "type": "text",
+    "label": "Default TTS voice",
+    "value": "Chief",
+    "options": {
+      "Chief": "Master Chief",
+      "Xemnas": "Xemnas",
+      "JC": "JC Denton",
+      "Geralt": "Geralt",
+      "Narrator": "Stanley Parable Narrator",
+      "Otacon": "Otacon",
+      "Dagoth": "Dagoth Ur",
+      "Cave": "Cave Johnson",
+      "HEV": "HEV Suit",
+      "Sora": "Sora",
+      "Coach": "Coach",
+      "Shapiro": "Ben Shapiro",
+      "Rogan": "Joe Rogan",
+      "Biden": "Joe Biden",
+      "Rust": "Rust",
+      "Johnny": "Johnny Silverhand (Keanu)",
+      "Solaire": "Solaire",
+      "Scientist": "HL1 Scientist",
+      "Elon": "Elon Musk"
+    }
+  }
+}

@@ -75,7 +75,7 @@ if(params.get("form_done")) {
 
         streamelements.on('disconnect', () => {
             console.log("Disconnected from streamelements");
-            streamelements.io.connect();
+            //streamelements.io.connect();
         });
 
         streamelements.on('authenticated', (data) => {
@@ -107,6 +107,27 @@ if(params.get("form_done")) {
                 QueueMessage(eleven_key, msg, voices);
             }
         });
+        streamelements.on('event:update', (data) => {
+            // Structure as on https://github.com/StreamElements/widgets/blob/master/CustomCode.md#on-event
+            console.log(data);
+            if(data.listener == "cheer-latest" && data.event.amount >= bit_threshold) {
+                msg = data.event.message.replaceAll(cheer_regex, "");
+                msg = RemoveBadWords(msg);
+                console.log(msg);
+                QueueMessage(eleven_key, msg, voices);
+            }
+        });
+        streamelements.on('event:reset', (data) => {
+            // Structure as on https://github.com/StreamElements/widgets/blob/master/CustomCode.md#on-event
+            console.log(data);
+            if(data.listener == "cheer-latest" && data.event.amount >= bit_threshold) {
+                msg = data.event.message.replaceAll(cheer_regex, "");
+                msg = RemoveBadWords(msg);
+                console.log(msg);
+                QueueMessage(eleven_key, msg, voices);
+            }
+        });
+
 
     }
 }

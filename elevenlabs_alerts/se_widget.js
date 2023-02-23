@@ -1,20 +1,27 @@
-//Returns list of voices (names, ids)
-// {
-//     "voices": [
-//       {
-//         "voice_id": "21m00Tcm4TlvDq8ikWAM",
-//         "name": "Rachel",
-//         "samples": [],
-//         "category": "premade",
-//         "labels": {},
-//         "preview_url": "https://storage.googleapis.com/eleven-public-prod/premade/voices/21m00Tcm4TlvDq8ikWAM/6edb9076-c3e4-420c-b6ab-11d43fe341c8.mp3",
-//         "available_for_tiers": [],
-//         "settings": null
-//       },
+let eleven_key,minimum_bits,default_voice;
+const cheer_regex = /[cC]heer[0-9]+/g;
 
 let voice_queue = [];
 let queue_running = false;
 let audio_player = null;
+
+const banned_words = [
+    /\bnigger(s*)\b/g,
+    /\bniger(s*)\b/g,
+    /\bfaggot(s*)\b/g,
+    /\bfagot(s*)\b/g,
+    /\btranny(s*)\b/g,
+    /\btrany(s*)\b/g,
+    /\bgook(s*)\b/g,
+    /\bchink(s*)\b/g
+];
+
+function RemoveBadWords(msg) {
+    for(word of banned_words) {
+        msg = msg.replaceAll(word, " ");
+    }
+    return msg;
+}
 
 async function GetVoices(api_key){
     let voices = []
@@ -164,3 +171,20 @@ function QueueMessage(api_key, message, voices){
         IterateQueue();
     }
 }
+
+window.addEventListener('onWidgetLoad', function (obj) {
+    const fieldData = obj.detail.fieldData;
+    eleven_key=fieldData["eleven_key"];
+    minimum_bits=fieldData["minimum_bits"];
+    default_voice=fieldData["default_voice"];
+});
+
+window.addEventListener('onEventReceived', function (obj) {
+    // fancy stuff here
+    if(obj.detail.listener == 'cheer-latest' && obj.detail.event.amount >= minimum_bits) {
+        msg = obj.detail.event.message.replaceAll(cheer_regex, "");
+        msg = RemoveBadWords(msg);
+        console.log(msg);
+        QueueMessage(eleven_key, msg, voices);
+    }
+});
