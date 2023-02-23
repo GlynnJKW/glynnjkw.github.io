@@ -75,7 +75,7 @@ if(params.get("form_done")) {
 
         streamelements.on('disconnect', () => {
             console.log("Disconnected from streamelements");
-            streamelements.socket.connect();
+            streamelements.io.connect();
         });
 
         streamelements.on('authenticated', (data) => {
@@ -87,7 +87,16 @@ if(params.get("form_done")) {
 
         window.streamelements = streamelements;
         console.log("asdf2");
-
+        streamelements.on('event:test', (data) => {
+            // Structure as on https://github.com/StreamElements/widgets/blob/master/CustomCode.md#on-event
+            console.log(data);
+            if(data.listener == "cheer-latest" && data.event.amount >= bit_threshold) {
+                msg = data.event.message.replaceAll(cheer_regex, "");
+                msg = RemoveBadWords(msg);
+                console.log(msg);
+                QueueMessage(eleven_key, msg, voices);
+            }
+        });
         streamelements.on('event', (data) => {
             // Structure as on https://github.com/StreamElements/widgets/blob/master/CustomCode.md#on-event
             console.log(data);
@@ -98,15 +107,6 @@ if(params.get("form_done")) {
                 QueueMessage(eleven_key, msg, voices);
             }
         });
-        streamelements.on('event:test', (data) => {
-            // Structure as on https://github.com/StreamElements/widgets/blob/master/CustomCode.md#on-event
-            //console.log(data);
-            if(data.listener == "cheer-latest" && data.event.amount >= bit_threshold) {
-                msg = data.event.message.replaceAll(cheer_regex, "");
-                msg = RemoveBadWords(msg);
-                console.log(msg);
-                QueueMessage(eleven_key, msg, voices);
-            }
-        });
+
     }
 }
