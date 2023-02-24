@@ -86,6 +86,7 @@ if(params.get("form_done")) {
             } = data;
             console.log(`Successfully connected to channel ${channelId}`);
         });
+        streamelements.on('unauthorized', console.error);
 
         window.streamelements = streamelements;
         console.log("asdf2");
