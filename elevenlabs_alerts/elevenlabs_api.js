@@ -15,6 +15,7 @@
 let voice_queue = [];
 let queue_running = false;
 let audio_player = null;
+let multi_voice = false;
 
 async function GetVoices(api_key){
     let voices = []
@@ -98,20 +99,22 @@ async function PlayMessage(api_key, message, voices){
     }
 
     let message_chunks = [{"name": default_voice, "text": message}];
-    for(voice of voices) {
-        let next_chunks = [];
-        for(message of message_chunks) {
-            let msgs = message.text.split(voice.name + ":")
-            if(msgs[0].trim() != "") {
-                next_chunks.push({"name": message.name, "text": msgs[0].trim()});
-            }
-            for(let i = 1; i < msgs.length; ++i){
-                if(msgs[i].trim() != "") {
-                    next_chunks.push({"name": voice.name, "text": msgs[i].trim()});
+    if(multi_voice) {
+        for(voice of voices) {
+            let next_chunks = [];
+            for(message of message_chunks) {
+                let msgs = message.text.split(voice.name + ":")
+                if(msgs[0].trim() != "") {
+                    next_chunks.push({"name": message.name, "text": msgs[0].trim()});
+                }
+                for(let i = 1; i < msgs.length; ++i){
+                    if(msgs[i].trim() != "") {
+                        next_chunks.push({"name": voice.name, "text": msgs[i].trim()});
+                    }
                 }
             }
-        }
-        message_chunks = next_chunks;
+            message_chunks = next_chunks;
+        }    
     }
     console.log(message_chunks);
 

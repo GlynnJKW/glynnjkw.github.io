@@ -5,6 +5,11 @@ let voices = [];
 let voice_queue = [];
 let queue_running = false;
 let audio_player = null;
+let multi_voice = false;
+let use_bits = true;
+let use_subs = true;
+let use_donos = true;
+
 
 const banned_words = [
     /\bnigger(s*)\b/g,
@@ -98,28 +103,30 @@ async function PlayMessage(api_key, message, voices){
 
         }
         else {
-            default_voice = "Chief";
+            default_voice = "Sput";
         }
     }
     else {
-        default_voice = "Chief";
+        default_voice = "Sput";
     }
 
     let message_chunks = [{"name": default_voice, "text": message}];
-    for(voice of voices) {
-        let next_chunks = [];
-        for(message of message_chunks) {
-            let msgs = message.text.split(voice.name + ":")
-            if(msgs[0].trim() != "") {
-                next_chunks.push({"name": message.name, "text": msgs[0].trim()});
-            }
-            for(let i = 1; i < msgs.length; ++i){
-                if(msgs[i].trim() != "") {
-                    next_chunks.push({"name": voice.name, "text": msgs[i].trim()});
+    if(multi_voice) {
+        for(voice of voices) {
+            let next_chunks = [];
+            for(message of message_chunks) {
+                let msgs = message.text.split(voice.name + ":")
+                if(msgs[0].trim() != "") {
+                    next_chunks.push({"name": message.name, "text": msgs[0].trim()});
+                }
+                for(let i = 1; i < msgs.length; ++i){
+                    if(msgs[i].trim() != "") {
+                        next_chunks.push({"name": voice.name, "text": msgs[i].trim()});
+                    }
                 }
             }
-        }
-        message_chunks = next_chunks;
+            message_chunks = next_chunks;
+        }    
     }
     console.log(message_chunks);
 
@@ -178,27 +185,37 @@ window.addEventListener('onWidgetLoad', function (obj) {
     eleven_key=fieldData["eleven_key"];
     minimum_bits=fieldData["minimum_bits"];
     default_voice=fieldData["default_voice"];
+    multi_voice=fieldData["multi_voice"];
+    use_bits=fieldData["use_bits"];
+    use_subs=fieldData["use_subs"];
+    use_donos=fieldData["use_donos"];
     GetVoices(eleven_key).then(v => voices = v).catch(err => console.error(err));
 });
 
 window.addEventListener('onEventReceived', function (obj) {
     // fancy stuff here
-    if(obj.detail.listener == 'cheer-latest' && obj.detail.event.amount >= minimum_bits) {
-        msg = obj.detail.event.message.replaceAll(cheer_regex, "");
-        msg = RemoveBadWords(msg);
-        console.log(msg);
-        QueueMessage(eleven_key, msg, voices);
+    if(use_bits) {
+        if(obj.detail.listener == 'cheer-latest' && obj.detail.event.amount >= minimum_bits) {
+            msg = obj.detail.event.message.replaceAll(cheer_regex, "");
+            msg = RemoveBadWords(msg);
+            console.log(msg);
+            QueueMessage(eleven_key, msg, voices);
+        }    
     }
-    // if(obj.detail.listener == 'subscriber-latest') {
-    //     msg = obj.detail.event.message.replaceAll(cheer_regex, "");
-    //     msg = RemoveBadWords(msg);
-    //     console.log(msg);
-    //     QueueMessage(eleven_key, msg, voices);
-    // }
-    // if(obj.detail.listener == 'tip-latest') {
-    //     msg = obj.detail.event.message.replaceAll(cheer_regex, "");
-    //     msg = RemoveBadWords(msg);
-    //     console.log(msg);
-    //     QueueMessage(eleven_key, msg, voices);
-    // }
+    if(use_subs) {
+        if(obj.detail.listener == 'subscriber-latest') {
+            msg = obj.detail.event.message.replaceAll(cheer_regex, "");
+            msg = RemoveBadWords(msg);
+            console.log(msg);
+            QueueMessage(eleven_key, msg, voices);
+        }    
+    }
+    if(use_donos) {
+        if(obj.detail.listener == 'tip-latest') {
+            msg = obj.detail.event.message.replaceAll(cheer_regex, "");
+            msg = RemoveBadWords(msg);
+            console.log(msg);
+            QueueMessage(eleven_key, msg, voices);
+        }    
+    }
 });

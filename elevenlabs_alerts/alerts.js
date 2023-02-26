@@ -2,6 +2,10 @@ let params = new URLSearchParams(document.location.href);
 let default_voice = "Chief";
 const cheer_regex = /[cC]heer[0-9]+/g;
 
+let use_bits = true;
+let use_subs = true;
+let use_donos = true;
+
 function UrlExists(url) {
     var http = new XMLHttpRequest();
         http.open('OPTIONS', url, false);
